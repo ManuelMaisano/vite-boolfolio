@@ -1,13 +1,33 @@
 <template>
-  <h1 class="text-center">Ciao</h1>
-  <i class="fa fa-solid fa-home"></i>
+ <div id="app">
+    <h1>Progetti</h1>
+    <ul>
+      <li v-for="project in projects" :key="project.id">
+        {{ project.title }}
+      </li>
+    </ul>
+  </div>
 </template>
 
 <script>
-  export default {
-    name: 'App'
+ import axios from 'axios';
+export default {
+  data() {
+    return {
+      projects: []
+    };
+  },
+  created() {
+    axios.get('http://localhost:8000/api/projects')
+      .then(response => {
+        this.projects = response.data;
+        console.log(response.data);
+      })
+      .catch(error => {
+        console.error('Error fetching projects:', error);
+      });
   }
-</script>
+};
 
 <style lang="scss" scoped>
 
