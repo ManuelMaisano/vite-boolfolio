@@ -1,7 +1,8 @@
 <template>
-    <div>
+    <div class="container">
         <h1>Progetti</h1>
         <p>Questi sono i progetti:</p>
+        <div v-if="error" class="alert alert-danger">{{ error }}</div>
         <div class="row">
             <div class="col-md-4" v-for="project in projects" :key="project.id">
                 <CardComponent :project="project" />
@@ -25,7 +26,8 @@ export default {
     },
     data() {
         return {
-            projects: []
+            projects: [],
+            error:''
         };
     },
     created() {
@@ -36,6 +38,7 @@ export default {
             })
             .catch(error => {
                 console.error('Error fetching projects:', error);
+                this.error = 'Errore nel caricamento dei progetti';
             });
     }
 };
